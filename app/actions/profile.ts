@@ -9,14 +9,26 @@ export async function updateProfile(_: unknown, formData: FormData) {
 
   if (!user) return { error: 'Não autenticado.' }
 
-  const name = formData.get('name') as string
-  const bio = formData.get('bio') as string
-  const city = formData.get('city') as string
-  const whatsapp = formData.get('whatsapp') as string
+  const bool = (field: string) => formData.get(field) === 'on'
 
   const { error } = await supabase
     .from('profiles')
-    .update({ name, bio, city, whatsapp })
+    .update({
+      name:     formData.get('name') as string,
+      bio:      formData.get('bio') as string,
+      city:     formData.get('city') as string,
+      whatsapp: formData.get('whatsapp') as string,
+      // idiomas
+      lang_pt:  bool('lang_pt'),
+      lang_en:  bool('lang_en'),
+      lang_es:  bool('lang_es'),
+      // diferenciais
+      feat_dicas:         bool('feat_dicas'),
+      feat_personalizado: bool('feat_personalizado'),
+      feat_familias:      bool('feat_familias'),
+      feat_24h:           bool('feat_24h'),
+      feat_cadastur:      bool('feat_cadastur'),
+    })
     .eq('id', user.id)
 
   if (error) return { error: 'Erro ao salvar perfil.' }

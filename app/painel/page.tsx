@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { Map, User, ExternalLink, ShieldCheck } from 'lucide-react'
+import { Map, User, ExternalLink, ShieldCheck, Zap, Star } from 'lucide-react'
 import { PLAN_INFO, PLAN_LIMITS, type Plan } from '@/types'
+import { criarPagamento } from '@/app/actions/pagamento'
 
 export default async function PainelPage() {
   const supabase = await createClient()
@@ -108,23 +109,59 @@ export default async function PainelPage() {
 
       {/* Upgrade */}
       {plan !== 'premium' && (
-        <Card className="border-amber-200 bg-amber-50">
-          <CardContent className="pt-6">
-            <div className="flex items-start justify-between gap-4 flex-wrap">
-              <div>
-                <h3 className="font-semibold text-amber-900">Quer mais visibilidade?</h3>
-                <p className="text-sm text-amber-700 mt-1">
-                  {plan === 'free'
-                    ? 'Faça upgrade para Pro (R$ 29/mês) e cadastre até 3 passeios com WhatsApp em destaque.'
-                    : 'Faça upgrade para Premium (R$ 49/mês) e apareça na vitrine principal com Selo Verificado.'}
-                </p>
-              </div>
-              <Badge className="bg-amber-200 text-amber-900 border-amber-300 whitespace-nowrap">
-                {plan === 'free' ? 'Pro — R$ 29/mês' : 'Premium — R$ 49/mês'}
-              </Badge>
-            </div>
-          </CardContent>
-        </Card>
+        <div>
+          <h2 className="text-base font-semibold text-gray-700 mb-3">Faça upgrade do seu plano</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+            {/* Pro */}
+            {plan === 'free' && (
+              <Card className="border-blue-200 bg-blue-50">
+                <CardContent className="pt-5 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Zap className="h-5 w-5 text-blue-600" />
+                    <span className="font-bold text-blue-900">Plano Pro</span>
+                    <Badge className="bg-blue-100 text-blue-800 border-blue-200 ml-auto">R$ 1/mês</Badge>
+                  </div>
+                  <ul className="text-sm text-blue-800 space-y-1">
+                    <li>✓ Até 3 passeios cadastrados</li>
+                    <li>✓ Botão WhatsApp no seu card</li>
+                    <li>✓ Mais visibilidade para turistas</li>
+                  </ul>
+                  <form action={criarPagamento}>
+                    <input type="hidden" name="plano" value="pro" />
+                    <Button type="submit" size="sm" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                      Assinar Pro
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Premium */}
+            <Card className="border-amber-200 bg-amber-50">
+              <CardContent className="pt-5 space-y-3">
+                <div className="flex items-center gap-2">
+                  <Star className="h-5 w-5 text-amber-600" />
+                  <span className="font-bold text-amber-900">Plano Premium</span>
+                  <Badge className="bg-amber-100 text-amber-800 border-amber-200 ml-auto">R$ 49/mês</Badge>
+                </div>
+                <ul className="text-sm text-amber-800 space-y-1">
+                  <li>✓ Até 7 passeios cadastrados</li>
+                  <li>✓ Destaque na vitrine principal</li>
+                  <li>✓ Selo Guia Verificado</li>
+                  <li>✓ Posição prioritária na busca</li>
+                </ul>
+                <form action={criarPagamento}>
+                  <input type="hidden" name="plano" value="premium" />
+                  <Button type="submit" size="sm" className="w-full bg-amber-600 hover:bg-amber-700 text-white">
+                    Assinar Premium
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+          </div>
+        </div>
       )}
     </div>
   )

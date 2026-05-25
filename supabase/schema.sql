@@ -59,12 +59,16 @@ DECLARE
   slug_final TEXT;
   contador INT := 0;
 BEGIN
-  slug_base := LOWER(
-    REGEXP_REPLACE(
-      UNACCENT(COALESCE(NEW.raw_user_meta_data->>'name', 'guia')),
-      '[^a-z0-9]', '-', 'g'
-    )
+  slug_base := REGEXP_REPLACE(
+    LOWER(COALESCE(NEW.raw_user_meta_data->>'name', 'guia')),
+    '[^a-z0-9]+', '-', 'g'
   );
+  slug_base := TRIM(BOTH '-' FROM slug_base);
+
+  IF slug_base = '' THEN
+    slug_base := 'guia';
+  END IF;
+
   slug_final := slug_base;
 
   WHILE EXISTS (SELECT 1 FROM public.profiles WHERE slug = slug_final) LOOP
@@ -86,6 +90,3 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 CREATE TRIGGER ao_criar_usuario
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.criar_perfil_novo_usuario();
-
--- Extensão necessária para remover acentos no slug
-CREATE EXTENSION IF NOT EXISTS unaccent;

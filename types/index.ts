@@ -13,6 +13,16 @@ export interface Profile {
   plan: Plan
   verified: boolean
   created_at: string
+  // idiomas
+  lang_pt: boolean
+  lang_en: boolean
+  lang_es: boolean
+  // diferenciais
+  feat_dicas: boolean
+  feat_personalizado: boolean
+  feat_familias: boolean
+  feat_24h: boolean
+  feat_cadastur: boolean
 }
 
 export interface Passeio {
@@ -25,6 +35,7 @@ export interface Passeio {
   difficulty: Difficulty | null
   duration: string | null
   active: boolean
+  photos: string[] | null
   created_at: string
 }
 
@@ -36,7 +47,7 @@ export const PLAN_LIMITS: Record<Plan, number> = {
 
 export const PLAN_INFO: Record<Plan, { label: string; price: string; limit: number }> = {
   free: { label: 'Grátis', price: 'R$ 0/mês', limit: 1 },
-  pro: { label: 'Pro', price: 'R$ 29/mês', limit: 3 },
+  pro: { label: 'Pro', price: 'R$ 1/mês', limit: 3 },
   premium: { label: 'Premium', price: 'R$ 49/mês', limit: 7 },
 }
 

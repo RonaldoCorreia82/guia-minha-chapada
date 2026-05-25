@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Clock, DollarSign } from 'lucide-react'
 import { CATEGORIES, DIFFICULTIES, type Passeio } from '@/types'
+import { PasseioPhotos } from '@/components/passeio-photos'
 
 interface PasseioCardProps {
   passeio: Passeio
@@ -15,8 +16,10 @@ const CATEGORY_COLORS = {
 }
 
 export function PasseioCard({ passeio }: PasseioCardProps) {
+  const photos = passeio.photos?.filter(Boolean) ?? []
+
   return (
-    <Card>
+    <Card className="overflow-hidden">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between gap-2">
           <CardTitle className="text-base">{passeio.title}</CardTitle>
@@ -49,6 +52,11 @@ export function PasseioCard({ passeio }: PasseioCardProps) {
           )}
         </div>
       </CardContent>
+
+      {/* Fotos */}
+      {photos.length > 0 && (
+        <PasseioPhotos photos={photos} title={passeio.title} />
+      )}
     </Card>
   )
 }

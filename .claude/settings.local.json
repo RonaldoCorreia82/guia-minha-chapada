@@ -2,7 +2,17 @@
   "permissions": {
     "allow": [
       "PowerShell(node --version)",
-      "PowerShell(npm --version)"
+      "PowerShell(npm --version)",
+      "Bash(npm run *)",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/guias)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/entrar)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(ngrok version *)",
+      "Bash(where ngrok *)",
+      "Bash(ngrok config *)",
+      "Read(//c/Users/Ronaldo/AppData/Local/ngrok/**)"
     ]
   }
 }

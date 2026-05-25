@@ -14,12 +14,14 @@ export default async function HomePage() {
     .from('profiles')
     .select('*')
     .eq('plan', 'premium')
+    .neq('role', 'admin')
     .limit(6)
     .order('created_at', { ascending: false })
 
   const { data: todosGuias } = await supabase
     .from('profiles')
     .select('*')
+    .neq('role', 'admin')
     .limit(9)
     .order('plan', { ascending: false })
     .order('created_at', { ascending: false })
@@ -47,7 +49,7 @@ export default async function HomePage() {
               </Button>
             </Link>
             <Link href="/cadastro">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+              <Button size="lg" className="bg-orange-200 text-black hover:bg-orange-300 border-0">
                 Sou guia, quero me cadastrar
               </Button>
             </Link>

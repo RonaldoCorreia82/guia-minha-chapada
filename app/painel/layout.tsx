@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { Navbar } from '@/components/navbar'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { LayoutDashboard, User, Map } from 'lucide-react'
+import { LayoutDashboard, User, Map, CreditCard } from 'lucide-react'
 
 export default async function PainelLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
@@ -22,6 +22,7 @@ export default async function PainelLayout({ children }: { children: React.React
               { href: '/painel', icon: LayoutDashboard, label: 'Painel' },
               { href: '/painel/perfil', icon: User, label: 'Meu Perfil' },
               { href: '/painel/passeios', icon: Map, label: 'Passeios' },
+              { href: '/painel/plano', icon: CreditCard, label: 'Meu Plano' },
             ].map(({ href, icon: Icon, label }) => (
               <Link
                 key={href}

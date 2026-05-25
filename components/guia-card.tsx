@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { MapPin, ShieldCheck } from 'lucide-react'
+import { MapPin, ShieldCheck, MessageCircle } from 'lucide-react'
 import type { Profile } from '@/types'
 
 interface GuiaCardProps {
@@ -15,20 +15,24 @@ export function GuiaCard({ guide }: GuiaCardProps) {
     <Card className="overflow-hidden hover:shadow-md transition-shadow">
       <CardContent className="p-0">
         <div className="flex flex-col sm:flex-row">
-          <div className="w-full sm:w-32 h-32 bg-green-100 flex items-center justify-center flex-shrink-0">
-            {guide.photo_url ? (
-              <Image
-                src={guide.photo_url}
-                alt={guide.name}
-                width={128}
-                height={128}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <span className="text-4xl font-bold text-green-700">
-                {guide.name.charAt(0).toUpperCase()}
-              </span>
-            )}
+          <div className="flex items-center justify-center p-4 sm:p-3 flex-shrink-0">
+            <Link href={`/guias/${guide.slug}`}>
+              <div className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center overflow-hidden flex-shrink-0 hover:opacity-80 transition-opacity">
+                {guide.photo_url ? (
+                  <Image
+                    src={guide.photo_url}
+                    alt={guide.name}
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-3xl font-bold text-green-700">
+                    {guide.name.charAt(0).toUpperCase()}
+                  </span>
+                )}
+              </div>
+            </Link>
           </div>
 
           <div className="p-4 flex flex-col gap-2 flex-1">
@@ -56,12 +60,25 @@ export function GuiaCard({ guide }: GuiaCardProps) {
               <p className="text-sm text-gray-600 line-clamp-2">{guide.bio}</p>
             )}
 
-            <div className="mt-auto pt-2">
+            <div className="mt-auto pt-2 flex gap-2 flex-wrap">
               <Link href={`/guias/${guide.slug}`}>
                 <Button size="sm" variant="outline" className="border-green-700 text-green-700 hover:bg-green-50">
                   Ver perfil
                 </Button>
               </Link>
+
+              {(guide.plan === 'pro' || guide.plan === 'premium') && guide.whatsapp && (
+                <a
+                  href={`https://wa.me/55${guide.whatsapp.replace(/\D/g, '')}?text=Olá ${encodeURIComponent(guide.name)}! Encontrei seu perfil no Guia Minha Chapada e gostaria de saber mais sobre seus passeios.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button size="sm" className="bg-green-500 hover:bg-green-600 text-white">
+                    <MessageCircle className="h-3.5 w-3.5 mr-1" />
+                    WhatsApp
+                  </Button>
+                </a>
+              )}
             </div>
           </div>
         </div>

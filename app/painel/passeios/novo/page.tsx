@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { PasseioPhotoUpload } from '@/components/passeio-photo-upload'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
@@ -89,6 +90,11 @@ export default function NovoPasseioPage() {
                 <option value="moderado">Moderado</option>
                 <option value="dificil">Difícil</option>
               </select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Fotos do passeio</Label>
+              <PasseioPhotoUpload />
             </div>
 
             {state?.error && (

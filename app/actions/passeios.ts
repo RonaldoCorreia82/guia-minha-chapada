@@ -29,6 +29,10 @@ export async function createPasseio(_: unknown, formData: FormData) {
     return { error: `Seu plano ${profile.plan} permite até ${limite} passeio(s). Faça upgrade para adicionar mais.` }
   }
 
+  const photos = ['photo_1', 'photo_2', 'photo_3']
+    .map((k) => formData.get(k) as string)
+    .filter(Boolean)
+
   const { error } = await supabase.from('passeios').insert({
     guide_id: user.id,
     title: formData.get('title') as string,
@@ -37,6 +41,7 @@ export async function createPasseio(_: unknown, formData: FormData) {
     price_estimate: formData.get('price_estimate') as string,
     difficulty: formData.get('difficulty') as string,
     duration: formData.get('duration') as string,
+    photos: photos.length > 0 ? photos : null,
   })
 
   if (error) return { error: 'Erro ao salvar passeio.' }

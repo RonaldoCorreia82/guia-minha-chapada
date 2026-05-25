@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useState } from 'react'
 import { updateProfile } from '@/app/actions/profile'
 import { createClient } from '@/lib/supabase/client'
+import { PhotoUpload } from '@/components/photo-upload'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -11,6 +12,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import type { Profile } from '@/types'
 
 const CIDADES = ['Lençóis', 'Mucugê', 'Andaraí', 'Palmeiras', 'Igatu', 'Ibicoara', 'Outra']
+
+function Checkbox({ name, label, defaultChecked }: { name: string; label: string; defaultChecked: boolean }) {
+  return (
+    <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer select-none">
+      <input
+        type="checkbox"
+        name={name}
+        defaultChecked={defaultChecked}
+        className="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+      />
+      {label}
+    </label>
+  )
+}
 
 export default function PerfilPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
@@ -34,13 +49,31 @@ export default function PerfilPage() {
         <p className="text-gray-500 text-sm">Informações visíveis para os turistas</p>
       </div>
 
+      {/* Foto de perfil */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Foto de perfil</CardTitle>
+          <CardDescription>Visível na listagem e no seu perfil público</CardDescription>
+        </CardHeader>
+        <CardContent className="flex justify-center py-2">
+          <PhotoUpload
+            userId={profile.id}
+            currentPhotoUrl={profile.photo_url}
+            name={profile.name}
+            onUpload={(url) => setProfile((p) => p ? { ...p, photo_url: url } : p)}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Dados do perfil */}
       <Card>
         <CardHeader>
           <CardTitle>Dados do perfil</CardTitle>
           <CardDescription>Preencha com cuidado — turistas verão essas informações</CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={action} className="space-y-4">
+          <form action={action} className="space-y-6">
+
             <div className="space-y-1">
               <Label htmlFor="name">Nome completo</Label>
               <Input id="name" name="name" defaultValue={profile.name} required />
@@ -75,6 +108,34 @@ export default function PerfilPage() {
                 rows={4}
                 placeholder="Conte sua história como guia, experiência, diferenciais..."
               />
+            </div>
+
+            {/* Idiomas */}
+            <div className="space-y-3">
+              <div>
+                <p className="text-sm font-medium text-gray-700">Atendimento em</p>
+                <p className="text-xs text-gray-400">Idiomas que você fala com os turistas</p>
+              </div>
+              <div className="flex flex-wrap gap-4">
+                <Checkbox name="lang_pt" label="Português" defaultChecked={profile.lang_pt ?? true} />
+                <Checkbox name="lang_en" label="Inglês"    defaultChecked={profile.lang_en ?? false} />
+                <Checkbox name="lang_es" label="Espanhol"  defaultChecked={profile.lang_es ?? false} />
+              </div>
+            </div>
+
+            {/* Diferenciais */}
+            <div className="space-y-3">
+              <div>
+                <p className="text-sm font-medium text-gray-700">Diferenciais do seu atendimento</p>
+                <p className="text-xs text-gray-400">Marque o que se aplica ao seu serviço</p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <Checkbox name="feat_dicas"         label="Ajuda com dicas locais"          defaultChecked={profile.feat_dicas ?? false} />
+                <Checkbox name="feat_personalizado" label="Passeios personalizados"          defaultChecked={profile.feat_personalizado ?? false} />
+                <Checkbox name="feat_familias"      label="Suporte para famílias e grupos"   defaultChecked={profile.feat_familias ?? false} />
+                <Checkbox name="feat_24h"           label="Atendimento 24 horas"             defaultChecked={profile.feat_24h ?? false} />
+                <Checkbox name="feat_cadastur"      label="Cadastrado(a) no CadasTur"        defaultChecked={profile.feat_cadastur ?? false} />
+              </div>
             </div>
 
             {state?.error && (

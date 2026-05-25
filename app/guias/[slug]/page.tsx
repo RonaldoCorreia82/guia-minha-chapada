@@ -3,7 +3,7 @@ import { Navbar } from '@/components/navbar'
 import { PasseioCard } from '@/components/passeio-card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { MapPin, MessageCircle, ShieldCheck } from 'lucide-react'
+import { MapPin, MessageCircle, ShieldCheck, Globe, Star } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import type { Passeio, Profile } from '@/types'
@@ -80,6 +80,30 @@ export default async function PerfilGuiaPage({ params }: Props) {
 
             {guide.bio && (
               <p className="text-gray-600 leading-relaxed max-w-xl">{guide.bio}</p>
+            )}
+
+            {/* Idiomas */}
+            {(guide.lang_pt || guide.lang_en || guide.lang_es) && (
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <div className="flex items-center gap-1 text-gray-500 text-sm">
+                  <Globe className="h-4 w-4" />
+                  <span>Atende em:</span>
+                </div>
+                {guide.lang_pt && <Badge variant="outline" className="text-xs border-green-300 text-green-700">🇧🇷 Português</Badge>}
+                {guide.lang_en && <Badge variant="outline" className="text-xs border-blue-300 text-blue-700">🇺🇸 Inglês</Badge>}
+                {guide.lang_es && <Badge variant="outline" className="text-xs border-orange-300 text-orange-700">🇪🇸 Espanhol</Badge>}
+              </div>
+            )}
+
+            {/* Diferenciais */}
+            {(guide.feat_dicas || guide.feat_personalizado || guide.feat_familias || guide.feat_24h || guide.feat_cadastur) && (
+              <div className="flex flex-wrap gap-2 pt-1">
+                {guide.feat_dicas         && <Badge className="bg-green-50 text-green-800 border border-green-200 text-xs font-normal"><Star className="h-3 w-3 mr-1" />Dicas locais</Badge>}
+                {guide.feat_personalizado && <Badge className="bg-green-50 text-green-800 border border-green-200 text-xs font-normal"><Star className="h-3 w-3 mr-1" />Passeios personalizados</Badge>}
+                {guide.feat_familias      && <Badge className="bg-green-50 text-green-800 border border-green-200 text-xs font-normal"><Star className="h-3 w-3 mr-1" />Famílias e grupos</Badge>}
+                {guide.feat_24h           && <Badge className="bg-green-50 text-green-800 border border-green-200 text-xs font-normal"><Star className="h-3 w-3 mr-1" />Atendimento 24h</Badge>}
+                {guide.feat_cadastur      && <Badge className="bg-amber-50 text-amber-800 border border-amber-200 text-xs font-normal"><ShieldCheck className="h-3 w-3 mr-1" />CadasTur</Badge>}
+              </div>
             )}
 
             {whatsappLink ? (
