@@ -104,11 +104,11 @@ export default async function PlanosPage() {
 
         {/* Cards de planos */}
         <section className="py-14 px-4">
-          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {PLANOS.map((plano) => (
               <div
                 key={plano.id}
-                className={`relative bg-white rounded-2xl border-2 p-6 flex flex-col gap-6 shadow-sm ${
+                className={`relative bg-white rounded-2xl border-2 p-6 flex flex-col gap-6 shadow-sm h-full ${
                   plano.destaque
                     ? 'border-green-600 shadow-green-100 shadow-lg'
                     : 'border-gray-200'
@@ -138,21 +138,8 @@ export default async function PlanosPage() {
                   </div>
                 </div>
 
-                {/* CTA */}
-                <Link href={user ? '/painel/plano' : plano.href}>
-                  <Button
-                    className={`w-full ${
-                      plano.destaque
-                        ? 'bg-green-700 hover:bg-green-800 text-white'
-                        : 'bg-gray-900 hover:bg-gray-800 text-white'
-                    }`}
-                  >
-                    {plano.cta}
-                  </Button>
-                </Link>
-
                 {/* Recursos */}
-                <ul className="space-y-2.5">
+                <ul className="space-y-2.5 flex-1">
                   {plano.recursos.map((r) => (
                     <li key={r.label} className="flex items-center gap-2 text-sm">
                       {r.incluso ? (
@@ -166,6 +153,19 @@ export default async function PlanosPage() {
                     </li>
                   ))}
                 </ul>
+
+                {/* CTA */}
+                <Link href={user ? '/painel/plano' : plano.href}>
+                  <Button
+                    className={`w-full ${
+                      plano.destaque
+                        ? 'bg-green-700 hover:bg-green-800 text-white'
+                        : 'bg-gray-900 hover:bg-gray-800 text-white'
+                    }`}
+                  >
+                    {plano.cta}
+                  </Button>
+                </Link>
               </div>
             ))}
           </div>
