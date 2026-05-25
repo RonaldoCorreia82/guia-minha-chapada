@@ -6,8 +6,8 @@ import { Preference } from 'mercadopago'
 import { redirect } from 'next/navigation'
 
 const PLANOS = {
-  pro:     { preco: 1.00, nome: 'Plano Pro — Guia Minha Chapada' },
-  premium: { preco: 49.00, nome: 'Plano Premium — Guia Minha Chapada' },
+  pro:     { preco: 29.00, nome: 'Plano Pro 3 meses — Guia Minha Chapada' },
+  premium: { preco: 49.00, nome: 'Plano Premium 3 meses — Guia Minha Chapada' },
 }
 
 export async function criarPagamento(formData: FormData) {

@@ -120,7 +120,10 @@ export default async function PainelPage() {
                   <div className="flex items-center gap-2">
                     <Zap className="h-5 w-5 text-blue-600" />
                     <span className="font-bold text-blue-900">Plano Pro</span>
-                    <Badge className="bg-blue-100 text-blue-800 border-blue-200 ml-auto">R$ 1/mês</Badge>
+                    <div className="ml-auto flex items-center gap-1">
+                      <span className="text-xs text-blue-400 line-through">R$ 60</span>
+                      <Badge className="bg-blue-100 text-blue-800 border-blue-200">R$ 29 / 3 meses</Badge>
+                    </div>
                   </div>
                   <ul className="text-sm text-blue-800 space-y-1">
                     <li>✓ Até 3 passeios cadastrados</li>
@@ -143,7 +146,10 @@ export default async function PainelPage() {
                 <div className="flex items-center gap-2">
                   <Star className="h-5 w-5 text-amber-600" />
                   <span className="font-bold text-amber-900">Plano Premium</span>
-                  <Badge className="bg-amber-100 text-amber-800 border-amber-200 ml-auto">R$ 49/mês</Badge>
+                  <div className="ml-auto flex items-center gap-1">
+                    <span className="text-xs text-amber-400 line-through">R$ 150</span>
+                    <Badge className="bg-amber-100 text-amber-800 border-amber-200">R$ 49 / 3 meses</Badge>
+                  </div>
                 </div>
                 <ul className="text-sm text-amber-800 space-y-1">
                   <li>✓ Até 7 passeios cadastrados</li>

@@ -4,7 +4,18 @@ import { Navbar } from '@/components/navbar'
 import { Button } from '@/components/ui/button'
 import { Check, X, Star } from 'lucide-react'
 
-const PLANOS = [
+const PLANOS: {
+  id: string
+  nome: string
+  preco: string
+  precoAntes?: string
+  periodo: string
+  descricao: string
+  destaque: boolean
+  cta: string
+  href: string
+  recursos: { label: string; incluso: boolean }[]
+}[] = [
   {
     id: 'free',
     nome: 'Grátis',
@@ -29,8 +40,9 @@ const PLANOS = [
   {
     id: 'pro',
     nome: 'Pro',
-    preco: 'R$ 1',
-    periodo: 'por mês',
+    preco: 'R$ 29',
+    precoAntes: 'R$ 60',
+    periodo: 'por 3 meses',
     descricao: 'Para guias que querem mais visibilidade e clientes',
     destaque: true,
     cta: 'Assinar Pro',
@@ -51,7 +63,8 @@ const PLANOS = [
     id: 'premium',
     nome: 'Premium',
     preco: 'R$ 49',
-    periodo: 'por mês',
+    precoAntes: 'R$ 150',
+    periodo: 'por 3 meses',
     descricao: 'Máxima visibilidade e credibilidade para guias experientes',
     destaque: false,
     cta: 'Assinar Premium',
@@ -114,9 +127,14 @@ export default async function PlanosPage() {
                 <div>
                   <h2 className="text-xl font-bold text-gray-900">{plano.nome}</h2>
                   <p className="text-sm text-gray-500 mt-1">{plano.descricao}</p>
-                  <div className="mt-4 flex items-end gap-1">
-                    <span className="text-4xl font-extrabold text-gray-900">{plano.preco}</span>
-                    <span className="text-gray-400 text-sm mb-1">/{plano.periodo}</span>
+                  <div className="mt-4 space-y-0.5">
+                    {plano.precoAntes && (
+                      <span className="text-sm text-gray-400 line-through">{plano.precoAntes}</span>
+                    )}
+                    <div className="flex items-end gap-1">
+                      <span className="text-4xl font-extrabold text-gray-900">{plano.preco}</span>
+                      <span className="text-gray-400 text-sm mb-1">/ {plano.periodo}</span>
+                    </div>
                   </div>
                 </div>
 

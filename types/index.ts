@@ -47,8 +47,8 @@ export const PLAN_LIMITS: Record<Plan, number> = {
 
 export const PLAN_INFO: Record<Plan, { label: string; price: string; limit: number }> = {
   free: { label: 'Grátis', price: 'R$ 0/mês', limit: 1 },
-  pro: { label: 'Pro', price: 'R$ 1/mês', limit: 3 },
-  premium: { label: 'Premium', price: 'R$ 49/mês', limit: 7 },
+  pro: { label: 'Pro', price: 'R$ 29/3 meses', limit: 3 },
+  premium: { label: 'Premium', price: 'R$ 49/3 meses', limit: 7 },
 }
 
 export const CATEGORIES: Record<Category, string> = {

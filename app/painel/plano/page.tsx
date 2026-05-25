@@ -12,27 +12,34 @@ const PLANOS: {
   id: Plan
   nome: string
   preco: string
+  precoAntes?: string
+  periodo?: string
   limite: number
   recursos: string[]
 }[] = [
   {
     id: 'free',
     nome: 'Grátis',
-    preco: 'R$ 0/mês',
+    preco: 'R$ 0',
+    periodo: 'para sempre',
     limite: 1,
     recursos: ['1 passeio', 'Perfil público', 'Botão WhatsApp'],
   },
   {
     id: 'pro',
     nome: 'Pro',
-    preco: 'R$ 1/mês',
+    preco: 'R$ 29',
+    precoAntes: 'R$ 60',
+    periodo: '3 meses',
     limite: 3,
     recursos: ['Até 3 passeios', 'Perfil público', 'WhatsApp em destaque'],
   },
   {
     id: 'premium',
     nome: 'Premium',
-    preco: 'R$ 49/mês',
+    preco: 'R$ 49',
+    precoAntes: 'R$ 150',
+    periodo: '3 meses',
     limite: 7,
     recursos: ['Até 7 passeios', 'Destaque na Home', 'Selo Guia Verificado', 'Posição prioritária'],
   },
@@ -131,7 +138,15 @@ export default async function PlanoPage() {
               )}
               <CardHeader className="pb-2">
                 <CardTitle className="text-base">{plano.nome}</CardTitle>
-                <p className="text-sm font-semibold text-gray-700">{plano.preco}</p>
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  {plano.precoAntes && (
+                    <span className="text-xs text-gray-400 line-through">{plano.precoAntes}</span>
+                  )}
+                  <span className="text-sm font-bold text-gray-800">{plano.preco}</span>
+                  {plano.periodo && (
+                    <span className="text-xs text-gray-400">/ {plano.periodo}</span>
+                  )}
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <ul className="space-y-1.5">

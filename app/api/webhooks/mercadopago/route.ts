@@ -32,9 +32,9 @@ export async function POST(req: NextRequest) {
     const [userId, plano] = ref.split(':')
     if (!userId || !plano) return NextResponse.json({ received: true })
 
-    // Define validade de 31 dias a partir de hoje
+    // Define validade de 93 dias (3 meses) a partir de hoje
     const expiresAt = new Date()
-    expiresAt.setDate(expiresAt.getDate() + 31)
+    expiresAt.setDate(expiresAt.getDate() + 93)
 
     const supabase = createAdminClient()
     const { error } = await supabase
